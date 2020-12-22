@@ -1,0 +1,8 @@
+{
+    "require": {
+        "twig/twig": "^3.0",
+        "delight-im/file-upload": "^1.2",
+        "fzaninotto/faker": "^1.9",
+        "peppeocchi/php-cron-scheduler": "^3.0"
+    }
+}

@@ -1,0 +1,129 @@
+<!-- <aside class="col-md-2">
+    <div class="logo">
+        <p>مساعد المعلم</p>
+    </div>
+    <div class="main-pages">
+        <ul>
+            <li onclick="window.location.href = '/admin'">
+                <i class="fas fa-house-user mr-1"></i> الصفحة الرئيسية
+            </li>
+            <li onclick="window.location.href = '/admin/students'"><i class="fas fa-users mr-1"></i> الطلاب</li>
+            <li onclick="window.location.href = '/admin/groups'"><i class="fas fa-layer-group mr-1"></i> المجموعات</li>
+            <li onclick="window.location.href = '/admin/question'"><i class="far fa-sticky-note mr-1"></i> بنك الاسئلة</li>
+            <li onclick="window.location.href = '/admin/questiondetales'"><i class="far fa-sticky-note mr-1"></i>الاختبارات</li>
+            <li onclick="window.location.href = '/admin/settings'"><i class="fas fa-cog mr-1"></i> الاعدادات</li>
+        </ul>
+    </div>
+</aside> -->
+
+<!-- ------------------- -->
+
+
+<article class="col-md-9">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+
+            <div class="layers">
+                <button class="ok-button mb-2" onclick="window.print()">طباعة الامتحان</button>
+
+                <div class="student-exam row">
+                    {% for Question in examQuestion | shuffle_assoc %} {% if examBank[Question['examsBank_id']-1]['type'] == 'images_question' %}
+                    <div class="question-element">
+                        <div class="question">
+                            <h4> {{examBank[Question['examsBank_id']-1]['question'] | base64_decode | url_decode | raw }}</h4>
+                        </div>
+                        <div class="answers">
+                            <div class="answer-element-images">
+                                <input type="radio" name="image" value="yellow" id="image1" />
+                                <label for="image1">
+                                            <img src="/storage/{{examBank[Question['examsBank_id']-1]['pic1']}}" alt=""
+                                                class="img-thumbnail">
+                                        </label>
+                            </div>
+                            <div class="answer-element-images">
+                                <input type="radio" name="image" value="yellow" id="image2" />
+                                <label for="image2">
+                                            <img src="/storage/{{examBank[Question['examsBank_id']-1]['pic1']}}" alt=""
+                                                class="img-thumbnail">
+                                        </label>
+                            </div>
+                            <div class="answer-element-images">
+                                <input type="radio" name="image" value="yellow" id="image3" />
+                                <label for="image3">
+                                            <img src="/storage/{{examBank[Question['examsBank_id']-1]['pic1']}}" alt=""
+                                                class="img-thumbnail">
+                                        </label>
+                            </div>
+                            <div class="answer-element-images">
+                                <input type="radio" name="image" value="yellow" id="image4" />
+                                <label for="image4">
+                                            <img src="/storage/{{examBank[Question['examsBank_id']-1]['pic1']}}" alt=""
+                                                class="img-thumbnail">
+                                        </label>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="question-element">
+                        <div class="question">
+                            <h4>{{(examBank[Question['examsBank_id']-1]['question']) | base64_decode | url_decode | raw }}</h4>
+                        </div>
+
+
+                        <div class="answers">
+                            {% set carr = c | shufflepp %}{% if examBank[Question['examsBank_id']-1]['type'] == 'mcq_question' %} {% if examBank[Question['examsBank_id']-1][carr[0]] != 'null' %}
+                            <div class="answer-element">
+                                <input type="radio" id="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" name="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" value="{{examBank[Question['examsBank_id']-1][carr[0]]}}" />
+                                <label for="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}">{{ examBank[Question['examsBank_id']-1][carr[0]] }}</label>
+                            </div>
+                            {% endif %} {% if examBank[Question['examsBank_id']-1][carr[1]] != 'null' %}
+                            <div class="answer-element">
+                                <input type="radio" id="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" name="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" value="{{examBank[Question['examsBank_id']-1][carr[1]]}}" />
+                                <label for="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}">{{ examBank[Question['examsBank_id']-1][carr[1]] }}</label>
+                            </div>
+                            {% endif %} {% if examBank[Question['examsBank_id']-1][carr[2]] != 'null' %}
+                            <div class="answer-element">
+                                <input type="radio" id="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" name="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" value="{{examBank[Question['examsBank_id']-1][carr[2]]}}" />
+                                <label for="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}">{{ examBank[Question['examsBank_id']-1][carr[2]] }}</label>
+                            </div>
+                            {% endif %} {% if examBank[Question['examsBank_id']-1][carr[3]] != 'null' %}
+                            <div class="answer-element">
+                                <input type="radio" id="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" name="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" value="{{examBank[Question['examsBank_id']-1][carr[3]]}}" />
+                                <label for="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}">{{ examBank[Question['examsBank_id']-1][carr[3]] }}</label>
+                            </div>
+                            {% endif %} {% endif %} {% if examBank[Question['examsBank_id']-1]['type'] == 'true_fales_question' %} {% set tfarr = tf | shufflepp %} {% if examBank[Question['examsBank_id']-1]['trf'] != null %}
+                            <div class="answer-element">
+                                <input type="radio" name="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" id="Q_A_{{tfarr[0]}}Qid_{{examBank[Question['examsBank_id']-1]['id']}}" value="{{tfarr[0]}}" />
+                                <label for="Q_A_{{tfarr[0]}}Qid_{{examBank[Question['examsBank_id']-1]['id']}}">{{tfv[tfarr[0]]}}</label>
+                            </div>
+                            <div class="answer-element">
+                                <input type="radio" name="Q_A_Qid_{{examBank[Question['examsBank_id']-1]['id']}}" id="Q_A_{{tfarr[1]}}Qid_{{examBank[Question['examsBank_id']-1]['id']}}" value="{{tfarr[1]}}" />
+                                <label for="Q_A_{{tfarr[1]}}Qid_{{examBank[Question['examsBank_id']-1]['id']}}">{{tfv[tfarr[1]]}}</label>
+                            </div>
+                            {% endif %} {% endif %}
+
+
+
+
+
+
+
+                        </div>
+
+
+                    </div>
+                    {% endif %} {% endfor %}
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</article>

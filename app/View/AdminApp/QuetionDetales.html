@@ -1,0 +1,438 @@
+<aside class="col-md-2">
+    <div class="logo">
+        <p>مساعد المعلم</p>
+    </div>
+    <div class="main-pages">
+        <ul>
+            <li onclick="window.location.href = '/admin'">
+                <i class="fas fa-house-user mr-1"></i> الصفحة الرئيسية
+            </li>
+            <li onclick="window.location.href = '/admin/students'"><i class="fas fa-users mr-1"></i> الطلاب</li>
+            <li onclick="window.location.href = '/admin/groups'"><i class="fas fa-layer-group mr-1"></i> المجموعات
+            </li>
+            <li onclick="window.location.href = '/admin/question'"><i class="far fa-sticky-note mr-1"></i> بنك الاسئلة</li>
+            <li class="active" onclick="window.location.href = '/admin/questiondetales'"><i class="far fa-sticky-note mr-1"></i>الاختبارات</li>
+            <li onclick="window.location.href = '/admin/settings'"><i class="fas fa-cog mr-1"></i> الاعدادات</li>
+        </ul>
+    </div>
+</aside>
+
+
+<section>
+    <div class="col-md-9 buttons">
+        <button data-toggle="modal" data-target="#createexam">انشاء امتحان</button>
+        <button style="display: none"></button>
+    </div>
+</section>
+
+<section class="all-moadels">
+
+
+
+
+    <!-- Edit Question Bank -->
+
+    <div class="modal fade" id="editquestionbank" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">تعديل بنك اسئلة</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{form}}" method="POST" class="mx-auto w-100 mt-5" autocomplete="off" login-form>
+                        <div class="form-group">
+                            <label for="question_bank_name_edit">اسم بنك الاسئلة</label>
+                            <input type="text" name="question_bank_name_edit" class="form-control question_bank_name_edit w-100" id="question_bank_name_edit" required aria-describedby="emailHelp" />
+                        </div>
+                        <div class="form-group">
+                            <label for="question_bank_level_edit">الصف</label>
+                            <select class="form-control question_bank_level_edit" id="question_bank_level_edit" name="question_bank_level_edit" required>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="question_bank_unit_edit">الوحدة</label>
+                            <select class="form-control question_bank_unit_edit" id="question_bank_unit_edit" name="question_bank_unit_edit" required>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="question_bank_lesson_edit">الدرس</label>
+                            <select class="form-control question_bank_lesson_edit" id="question_bank_lesson_edit" name="question_bank_lesson_edit" required>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="edit_button text-center w-100" type="submit" data-dismiss="modal" aria-label="Close">
+                            تعديل
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ----------- -->
+
+    <!-- Delete Question Bank -->
+
+    <div class="modal fade delete-modal" id="deletequestionbank" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">حذف</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="w-100 text-center">هل تريد حذف بنك الاسئلة بالفعل</h5>
+                    <p class="w-100 text-center">
+                        في حال حذف بنك الاسئلة لا يمكن التراجع وسوف يتم فقد كل البيانات الخاصة بهذا البنك
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="float-left w-100 confirm-delete" data-dismiss="modal" aria-label="Close">
+                            تأكيد
+                        </button>
+                    <button class="text-center w-100" data-dismiss="modal" aria-label="Close">
+                            تراجع
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ------ -->
+
+
+    <!-- Create Exam Model -->
+    <div class="modal fade" id="createexam" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">انشاء اختبار</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exam_name_add">اسم الاختبار</label>
+                        <input type="text" class="form-control exam_name_add w-100" id="exam_name_add" aria-describedby="emailHelp" />
+                    </div>
+                    <div class="form-group">
+                        <label for="studentlevel_addexam">الصف</label>
+                        <select class="form-control studentlevel_addexam" id="studentlevel_addexam">
+                            <option selected disabled>الصف</option>
+                            {% for level in levels %}
+                            {% if level['delete_flag'] ==0 %}
+                            <option value="{{level['id']}}">{{level['name']}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exam_content_add">المحتوي</label>
+                        <div class='unitlessons4level-1'>
+
+                            {% for unit in units %} {% if unit['levels_id'] == '1' %}
+
+                            <input type="checkbox" id="unit__{{unit['id']}}" data-toggle="collapse" data-target="#unit_{{unit['id']}}" aria-expanded="false" aria-controls="collapseExample">
+                            <label style="color: black !important;" for="unit__{{unit['id']}}">{{unit['name']}}</label><br>
+
+                            <div class="collapse" id="unit_{{unit['id']}}">
+                                {% for lesson in lessons %} {% if lesson['units_id'] == unit['id'] %}
+                                <input type="checkbox" name="lessonone" value="{{lesson['id']}}">
+                                <label>{{lesson['name']}}</label><br> {% endif %} {% endfor %}
+
+
+                            </div>
+
+
+                            {% endif %} {% endfor %}
+
+
+                        </div>
+                        <div class='unitlessons4level-2'>
+                            {% for unit in units %} {% if unit['levels_id'] == '2' %}
+
+                            <input type="checkbox" id="unit__{{unit['id']}}" data-toggle="collapse" data-target="#unit_{{unit['id']}}" aria-expanded="false" aria-controls="collapseExample">
+                            <label style="color: black !important;" for="unit__{{unit['id']}}">{{unit['name']}}</label><br>
+
+                            <div class="collapse" id="unit_{{unit['id']}}">
+                                {% for lesson in lessons %} {% if lesson['units_id'] == unit['id'] %}
+                                <input type="checkbox" name="lessonone" value="{{lesson['id']}}">
+                                <label>{{lesson['name']}}</label><br> {% endif %} {% endfor %}
+
+
+                            </div>
+
+
+                            {% endif %} {% endfor %}
+
+                        </div>
+                        <div class='unitlessons4level-3'>
+                            {% for unit in units %} {% if unit['levels_id'] == '3' %}
+
+                            <input type="checkbox" id="unit__{{unit['id']}}" data-toggle="collapse" data-target="#unit_{{unit['id']}}" aria-expanded="false" aria-controls="collapseExample">
+                            <label style="color: black !important;" for="unit__{{unit['id']}}">{{unit['name']}}</label><br>
+
+                            <div class="collapse" id="unit_{{unit['id']}}">
+                                {% for lesson in lessons %} {% if lesson['units_id'] == unit['id'] %}
+                                <input type="checkbox" name="lessonone" value="{{lesson['id']}}">
+                                <label>{{lesson['name']}}</label><br> {% endif %} {% endfor %}
+
+
+                            </div>
+
+
+                            {% endif %} {% endfor %}
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exam_count_add">عدد الاسئلة</label>
+                        <input type="text" name="exam_count_add" class="form-control exam_count_add w-100" id="exam_count_add" required aria-describedby="emailHelp" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exam_time_add">مدة الامتحان</label>
+                        <input type="text" name="exam_time_add" class="form-control exam_time_add w-100" id="exam_time_add" required aria-describedby="emailHelp" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exam_date_add">تاريخ الامتحان</label>
+                        <input type="date" name="exam_date_add" class="form-control exam_date_add w-100" id="exam_date_add" required aria-describedby="emailHelp" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="ok-button text-center w-100">
+                    انشاء
+                </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ----- -->
+
+    <!-- Delete Exam -->
+
+    <div class="modal fade delete-modal" id="deleteexam" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">حذف</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="w-100 text-center">هل تريد حذف الاختبار بالفعل</h5>
+                    <p class="w-100 text-center">
+                        في حال حذف الاختبار لا يمكن التراجع وسوف يتم فقد كل البيانات الخاصة بهذا الاختبار
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="float-left w-100 confirm-delete" data-dismiss="modal" aria-label="Close">
+                            تأكيد
+                        </button>
+                    <button class="text-center w-100" data-dismiss="modal" aria-label="Close">
+                            تراجع
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ------ -->
+
+    <!-- Edit Exam -->
+
+    <div class="modal fade" id="editexam" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">تعديل اختبار</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{form}}" method="POST" class="mx-auto w-100 mt-5" autocomplete="off" login-form>
+                        <div class="form-group">
+                            <label for="exam_name_edit">اسم الاختبار</label>
+                            <input type="text" name="exam_name_edit" class="form-control exam_name_edit w-100" id="exam_name_edit" required aria-describedby="emailHelp" />
+                        </div>
+                        <div class="form-group">
+                            <label for="studentlevel_edit">الصف</label>
+                            <select class="form-control studentlevel_edit" id="studentlevel_edit" name="studentlevel_edit" required>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exam_content_edit">المحتوي</label>
+                            <select class="form-control exam_content_edit" id="exam_content_edit" name="exam_content_edit" required>
+                                    <option selected disabled>اختر محتوي الاختبار</option>
+                                    <option>سبت - اثنين - اربعاء</option>
+                                    <option>احد - ثلاثاء - خميس</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exam_count_edit">عدد الاسئلة</label>
+                            <input type="text" name="exam_count_edit" class="form-control exam_count_edit w-100" id="exam_count_edit" required aria-describedby="emailHelp" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exam_time_edit">مدة الامتحان</label>
+                            <input type="text" name="exam_time_edit" class="form-control exam_time_edit w-100" id="exam_time_edit" required aria-describedby="emailHelp" />
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="edit_button text-center w-100" type="submit" data-dismiss="modal" aria-label="Close">
+                            تعديل
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ---------- -->
+</section>
+
+<article class="col-md-9">
+    <div class="layers">
+        <div class="table-container">
+            <h4>بنك الاسئلة</h4>
+
+            <div class="form-group col-md-2">
+                <label for="jslevel">الصف</label>
+                <select class="form-control jslevel" id="jslevel">
+                    <option selected disabled>الصف</option>
+                    {% for level in levels %}
+                    {% if level['delete_flag'] ==0 %}
+                    <option value="{{level['id']}}">{{level['name']}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="jsunit">الوحدة</label>
+                <select class="form-control jsunit" id="jsunit">
+                    <option selected disabled>الوحدة</option>
+
+                </select>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="LessonsList">الدرس</label>
+                <select class="form-control LessonsList" id="LessonsList">
+                    <option selected disabled>الدرس</option>
+
+                </select>
+            </div>
+
+            <table id="questionbankmenutable" class="display the-table w-100">
+                <thead>
+                    <tr>
+                        <th>السؤال</th>
+                        <th>نوع السؤال</th>
+                        <th>الصف</th>
+                        <th>الوحدة</th>
+                        <th>الدرس</th>
+                        <th>حذف</th>
+                        <th>id</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="modal fade" id="showresult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center w-100">قائمة النتائج</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="AllStudentOnexam" class="styled-table w-100">
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="text-center w-100" data-dismiss="modal" aria-label="Close">
+                            غلق
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-container">
+            <h4>الاختبارات المنشأه</h4>
+
+            <div class="form-group col-md-2">
+                <label for="examsmenutable-level">الصف</label>
+                <select class="form-control examsmenutable-level" id="examsmenutable-level">
+                    <option value="0"></option>
+
+                    {% for level in levels %}
+                    {% if level['delete_flag'] ==0 %}
+                    <option value="{{level['id']}}">{{level['name']}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+
+
+            <table id="examsmenutable" class="display the-table w-100">
+                <thead>
+                    <tr>
+                        <th>اسم الاختبار</th>
+                        <th>الصف</th>
+                        <th>تاريخ الامتحان</th>
+                        <th>عدد الاسئلة</th>
+                        <th>مدة الامتحان</th>
+                        <th>حذف</th>
+                        <th>النتيجة</th>
+                        <th>الأسئلة</th>
+                        <th>id</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</article>

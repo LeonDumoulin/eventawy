@@ -1,0 +1,173 @@
+{% set activeclass = {'employee':'active' } %} {% include "asied.html" ignore missing with activeclass %}
+
+
+<section class="all-moadels">
+
+    <div class="modal fade delete-modal" id="deletestudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">حذف</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="w-100 text-center">هل تريد حذف الموظف بالفعل</h5>
+                    <p class="w-100 text-center">
+                        في حال حذف الموظف لا يمكن التراجع وسوف يتم فقد كل البيانات الخاصة به
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="float-left w-100 confirm-delete" data-dismiss="modal" aria-label="Close">
+                        تأكيد
+                    </button>
+                    <button class="text-center w-100" data-dismiss="modal" aria-label="Close">
+                        تراجع
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ------------ -->
+
+    <!-- Refuse Modal -->
+
+    <div class="modal fade delete-modal" id="refusestudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">رفض</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="w-100 text-center">هل تريد رفض الموظف بالفعل</h5>
+                    <p class="w-100 text-center">
+                        في حال رفض الموظف لا يمكن التراجع وسوف يتم فقد كل البيانات الخاصة به
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="float-left w-100 confirm-delete" data-dismiss="modal" aria-label="Close">
+                        تأكيد
+                    </button>
+                    <button class="text-center w-100" data-dismiss="modal" aria-label="Close">
+                        تراجع
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ------------ -->
+    <!-- ............. -->
+
+</section>
+
+<article class="col-md-9">
+    <div class="layers">
+        <div class="table-container">
+            <h4>الموظفين الجدد</h4>
+
+            <table id="pendingrequeststable" class="display the-table w-100">
+                <thead>
+                    <tr>
+                        <th>اسم الموظف</th>
+                        <th>المجموعة</th>
+                        <th>خيارات</th>
+                        <th>id</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in users %} {% if student['delete_flag'] == 4 %}
+                    <div>
+                        <tr>
+                            <td>{{student['name']}}</td>
+                            <td>{{student['name']}}</td>
+                            <td>{{student['name']}}</td>
+                            <td>{{student['id']}}</td>
+
+                        </tr>
+                    </div>
+                    {% endif %} {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h4>جميع الموظفين</h4>
+
+            <div class="form-group col-md-2">
+                <label for="lstudentlevel">فلتر</label>
+                <select class="form-control lstudentlevel" id="lstudentlevel" name="student_level" required>
+                    <option value="0">فلتر</option>
+
+                    <!-- {% for level in levels %}
+                    {% if level['delete_flag'] ==0 %}
+                    <option value="{{level['id']}}">{{level['name']}}</option>
+                    {% endif %}
+                    {% endfor %} -->
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="lstudentgroup">المجموعة</label>
+                <select class="form-control lstudentgroup" id="lstudentgroup" name="student_grou[" required>
+
+                </select>
+            </div>
+            <table id="studentmenutable" class="display the-table w-100">
+                <thead>
+                    <tr>
+                        <th>اسم الموظف</th>
+                        <th>اسم الموظف</th>
+                        <th>الهاتف</th>
+                        <th>المجموعة</th>
+                        <th>كلمة المرور</th>
+                        <th>المرحلة</th>
+                        <th>ايقاف مؤقت</th>
+                        <th>حذف</th>
+                        <th>id</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for employee in users %}
+                    <tr>
+                        <td> {{employee['id']}} </td>
+                        <td> {{employee['id']}} </td>
+                        <td> {{employee['id']}} </td>
+                        <td> {{employee['id']}} </td>
+                        <td> {{employee['id']}} </td>
+                        <td> {{employee['id']}} </td>
+                        <td> {{employee['id']}} </td>
+                        <td> {{employee['id']}} </td>
+                        <td> {{employee['id']}} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</article>
+
+<!-- <script src="js/axios.js"></script>
+<script src="js/all.min.js"></script>
+<script src="js/jquery.js" crossorigin="anonymous"></script>
+<script src="js/popper.min.js" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="js/dataTables.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.buttons.min.js"></script>
+<script src="js/buttons.flash.min.js"></script>
+<script src="js/jszip.min.js"></script>
+<script src="js/pdfmake.min.js"></script>
+<script src="js/vfs_fonts.js"></script>
+<script src="js/buttons.html5.min.js"></script>
+<script src="js/buttons.print.min.js"></script>
+<script src="js/buttons.colVis.min.js"></script>
+<script src="js/Students.js"></script>
+</body> -->
+<!-- 
+</html> -->

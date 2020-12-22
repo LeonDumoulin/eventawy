@@ -1,0 +1,178 @@
+{% set activeclass = {'setting':'active' } %} {% include "asied.html" ignore missing with activeclass %}
+
+
+
+<section>
+    <div class="col-md-9 buttons">
+        <button data-toggle="modal" data-target="#addsupervisor">
+                اضافة مشرف
+            </button>
+    </div>
+
+</section>
+
+<section class="all-moadels">
+    <!-- Add Model -->
+    <div class="modal fade" id="addsupervisor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">اضافة مشرف</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="/add/superadmin" id="adminformadd" method="post" autocomplete="off">
+                        <div class="form-group">
+                            <label for="supervisor_name_add">اسم </label>
+                            <input type="text" name="user" class="form-control supervisor_name_add w-100" id="supervisor_name_add" required aria-describedby="emailHelp" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supervisor_power_add">الصلاحية</label>
+                            <select class="form-control supervisor_power_add" id="supervisor_power_add" name="role" required>
+                                <option value="admin">مدرس</option>
+                                <option value="secretary">سكرتاريا</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="supervisor_password_add">كلمة السر</label>
+                            <input type="password" name="password" required class="form-control w-100 supervisor_password_add" id="supervisor_password_add" />
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="ok-button text-center w-100" type="submit" form="adminformadd">
+                            اضافة
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ----- -->
+
+    <!-- Delete Supervisor  -->
+
+    <div class="modal fade delete-modal" id="deletesupervisor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">حذف</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="w-100 text-center">هل تريد حذف المشرف بالفعل</h5>
+                    <p class="w-100 text-center">
+                        في حال حذف المشرف لا يمكن التراجع وسوف يتم فقد كل البيانات الخاصة بهذا المشرف
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="float-left w-100 confirm-delete" data-dismiss="modal" aria-label="Close">
+                            تأكيد
+                        </button>
+                    <button class="text-center w-100" data-dismiss="modal" aria-label="Close">
+                            تراجع
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ------ -->
+
+    <!-- Edit Supervisor -->
+
+    <div class="modal fade" id="editsupervisor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100">تعديل مشرف</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="/upervisor/edit" id="editsupervisors" method="post">
+                        <div class="form-group">
+                            <label for="supervisor_name_edit">اسم المشرف</label>
+                            <input type="text" name="user" class="form-control supervisor_name_edit w-100" id="supervisor_name_edit" required aria-describedby="emailHelp" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supervisor_power_edit">الصلاحية</label>
+                            <select class="form-control supervisor_power_edit" id="supervisor_power_edit" name="role" required>
+                                <option value="admin">plapla</option>
+                                <option value="secretary">plapla</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="supervisor_password_edit">كلمة السر</label>
+                            <input type="text" name="password" required class="form-control w-100 supervisor_password_edit" id="supervisor_password_edit" />
+                        </div>
+                        <input type="hidden" class="supervisor_id_edit" name='id'>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="edit_button text-center w-100" form="editsupervisors" type="submit">
+                            تعديل
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ---------- -->
+
+</section>
+
+<article class="col-md-9">
+    <div class="layers">
+        <div class="table-container">
+            <h4>المشرفين</h4>
+
+            <table id="supervisormenutable" class="display the-table w-100">
+                <thead>
+                    <tr>
+                        <th>اسم المشرف</th>
+                        <th>الصلاحية</th>
+                        <th>كلمة السر</th>
+                        <th>تعديل</th>
+                        <th>حذف</th>
+                        <th>id</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for admin in admins %} {% if admin['delete_flag'] == 0 %}
+                    <tr>
+                        <td class=""><span class="supervisor_name">{{admin['user']}}</span></td>
+                        <td><span class="supervisor_power">{{admin['role']}}</span> </td>
+                        <td><span class="supervisor_password">{{admin['password']}}</span></td>
+                        <td>
+                            <button data-toggle="modal" data-target="#editsupervisor" class="edit_button">
+                                        تعديل
+                                    </button>
+                        </td>
+                        <td>
+                            <button class="delete-button" data-toggle="modal" data-target="#deletesupervisor">
+                                        حذف
+                                    </button>
+                        </td>
+                        <td>{{admin['id']}}</td>
+                    </tr>
+                    {% endif %} {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</article>
