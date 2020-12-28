@@ -12,3 +12,9 @@ NI_route::get('/org/login', function () {
 NI_route::post('/org/login', function () {
     NI_Controller::run('org\auth@loginfunc');
 });
+NI_route::get('/org/register', function () {
+    NI_Controller::run('org\auth@login');
+});
+NI_route::post('/org/register', function () {
+    NI_Controller::run('org\auth@loginfunc');
+});
